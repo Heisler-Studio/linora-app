@@ -2,14 +2,14 @@
 
 ## API
 
-To generate only the server code (excludes web app), compile with:
+To generate only the server code (`no-ssg` excludes web app), compile with:
 
 ```bash
-npx expo export --platform web --no-ssg
-eas deploy
+npx expo export --platform web [--no-ssg]
+eas deploy [--prod]
 ```
 
 ## TODO
 
-- [ ] Configure the origin from EAS deployment
+- [x] Configure the origin from EAS deployment
 - [ ] Setup env files

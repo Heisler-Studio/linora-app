@@ -20,7 +20,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     output: 'server',
   },
   plugins: [
-    'expo-router',
+    [
+      'expo-router',
+      {
+        origin: 'https://linora-app--production.expo.app/',
+      },
+    ],
     [
       'expo-splash-screen',
       {
@@ -37,5 +42,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     typedRoutes: true,
     reactCompiler: true,
+  },
+  extra: {
+    eas: {
+      projectId: '87a1aadb-83ea-4956-864a-d7a8e4bd1cfa',
+    },
   },
 });
