@@ -16,6 +16,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: 'com.linora.app',
   },
+  web: {
+    output: 'server',
+  },
   plugins: [
     'expo-router',
     [
