@@ -1,4 +1,4 @@
-import { LINORA_API_URL } from '@/consts';
+import consts from '@/consts';
 import { FetchRequestInit, fetch as expoFetch } from 'expo/fetch';
 
 // In-memory cache for promises to prevent re-fetching on re-render.
@@ -10,6 +10,8 @@ async function coreFetch<T>(
   endpoint: string,
   options?: FetchRequestInit
 ): Promise<T> {
+  const { LINORA_API_URL } = consts;
+
   const url = `${LINORA_API_URL}${endpoint}`;
 
   const response = await expoFetch(url, {
@@ -41,17 +43,19 @@ export function fetchSuspense<T>(
   endpoint: string,
   options?: FetchRequestInit
 ): Promise<T> {
+  const { LINORA_API_URL } = consts;
+
   // Use the endpoint as the cache key.
   const cacheKey = endpoint;
 
   // Check the cache first
   if (promiseCache.has(cacheKey)) {
-    console.log('Cache hit for', cacheKey);
+    console.log(`Cache hit for ${LINORA_API_URL}${cacheKey}`);
     return promiseCache.get(cacheKey)!;
   }
 
   // If not in cache, create the promise, store it, and return it.
-  console.log('Cache miss for', cacheKey);
+  console.log(`Cache miss for ${LINORA_API_URL}${cacheKey}`);
   const promise = coreFetch<T>(endpoint, options);
   promiseCache.set(cacheKey, promise);
 
