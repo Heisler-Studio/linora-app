@@ -23,7 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-router',
       {
-        origin: 'https://linora-app--production.expo.app/api',
+        origin: 'https://linora-app--production.expo.app/',
       },
     ],
     [
