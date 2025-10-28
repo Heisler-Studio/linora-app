@@ -1,16 +1,27 @@
 {
+  "cli": {
+    "version": ">= 14.4.1",
+    "appVersionSource": "remote"
+  },
   "build": {
-    "staging": {
-      "extends": "base",
-      "env": {
-        "EXPO_PUBLIC_APP_ENV": "staging"
-      }
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "environment": "development",
+      "channel": "development"
+    },
+    "preview": {
+      "distribution": "internal",
+      "environment": "preview",
+      "channel": "preview"
     },
     "production": {
-      "extends": "base",
-      "env": {
-        "EXPO_PUBLIC_APP_ENV": "production"
-      }
+      "autoIncrement": true,
+      "environment": "production",
+      "channel": "production"
     }
+  },
+  "submit": {
+    "production": {}
   }
 }

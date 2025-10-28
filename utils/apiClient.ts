@@ -1,4 +1,4 @@
-import consts from '@/consts';
+import consts from '@/env';
 import { FetchRequestInit, fetch as expoFetch } from 'expo/fetch';
 
 // In-memory cache for promises to prevent re-fetching on re-render.
