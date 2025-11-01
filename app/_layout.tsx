@@ -12,9 +12,11 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-const presentationHelper = () => {
-  return isLiquidGlassAvailable() ? 'formSheet' : 'modal';
-};
+// const presentationHelper = () => {
+//   // formSheet has all sorts of issues with headers and layout
+//   // return isLiquidGlassAvailable() ? 'formSheet' : 'modal';
+//   return 'modal';
+// };
 
 function Navigation() {
   const rawTheme = useColorScheme();
@@ -34,16 +36,14 @@ function Navigation() {
       <Stack.Screen
         name="settings/index"
         options={{
-          presentation: presentationHelper(),
+          presentation: 'modal',
           sheetGrabberVisible: false,
           sheetAllowedDetents: [1],
           sheetInitialDetentIndex: 0,
           headerBlurEffect: isGlassAvailable ? undefined : blurEffect,
-          headerLargeTitle: true,
           headerTransparent: true,
           headerTintColor: theme === 'dark' ? 'white' : 'black',
-          headerLargeStyle: { backgroundColor: 'transparent' },
-          title: 'Settings',
+          title: '',
           headerRight: () => (
             <IconButton systemName="multiply" goBack size={30} />
           ),

@@ -92,7 +92,7 @@ export const getDynamicAppConfig = (
       name: `${APP_NAME} Preview`,
       bundleIdentifier: `${BUNDLE_IDENTIFIER}.preview`,
       packageName: `${PACKAGE_NAME}.preview`,
-      icon: './assets/images/icons/iOS-Prev.png',
+      icon: ICON,
       scheme: `${SCHEME}-prev`,
     };
   }
@@ -101,7 +101,7 @@ export const getDynamicAppConfig = (
     name: `${APP_NAME} Development`,
     bundleIdentifier: `${BUNDLE_IDENTIFIER}.dev`,
     packageName: `${PACKAGE_NAME}.dev`,
-    icon: './assets/images/icons/iOS-Dev.png',
+    icon: ICON,
     scheme: `${SCHEME}-dev`,
   };
 };
