@@ -55,7 +55,6 @@ function Navigation() {
 
 export default function Layout() {
   const colorScheme = useColorScheme() || 'light';
-  console.log('Root Color scheme:', colorScheme);
 
   return (
     <GestureHandlerRootView style={styles.container}>

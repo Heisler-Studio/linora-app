@@ -4,8 +4,8 @@ import { AppSettings, AppState, UserProfile } from './types';
 export const AppContext = createContext<AppState | null>(null);
 
 export const initialProfile: UserProfile = {
-  name: 'Beto',
-  username: '@betomoedano',
+  name: 'Evan Heisler',
+  username: '@evanheisler',
   avatar: 'person.fill',
   theme: '#4A90E2',
   profileImageSize: 'medium',
