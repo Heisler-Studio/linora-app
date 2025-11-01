@@ -1,4 +1,4 @@
-// import ContextMenuProfile from "@/components/ContextMenu.ios";
+import ContextMenuProfile from '@/components/ContextMenu';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
@@ -20,8 +20,8 @@ export default function Layout() {
           headerTintColor: theme === 'dark' ? 'white' : 'black',
           headerLargeStyle: { backgroundColor: 'transparent' },
           headerBlurEffect: isGlassAvailable ? undefined : blurEffect,
-          title: 'Home',
-          // headerLeft: () => <ContextMenuProfile />,
+          title: 'Welcome',
+          headerRight: () => <ContextMenuProfile />,
         }}
       />
       {/* <Stack.Screen
