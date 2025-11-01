@@ -1,3 +1,4 @@
+import { IconButton } from '@/components/IconButton';
 import { AppProvider } from '@/providers/AppContext';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import {
@@ -5,18 +6,47 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
+import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+const presentationHelper = () => {
+  return isLiquidGlassAvailable() ? 'formSheet' : 'modal';
+};
+
 function Navigation() {
+  const rawTheme = useColorScheme();
+  const theme = rawTheme === 'dark' ? 'dark' : 'light';
+  const isGlassAvailable = isLiquidGlassAvailable();
+  const blurEffect =
+    theme === 'dark' ? 'systemMaterialDark' : 'systemMaterialLight';
+
   return (
     <Stack>
       <Stack.Screen
         name="(tabs)"
         options={{
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="settings/index"
+        options={{
+          presentation: presentationHelper(),
+          sheetGrabberVisible: false,
+          sheetAllowedDetents: [1],
+          sheetInitialDetentIndex: 0,
+          headerBlurEffect: isGlassAvailable ? undefined : blurEffect,
+          headerLargeTitle: true,
+          headerTransparent: true,
+          headerTintColor: theme === 'dark' ? 'white' : 'black',
+          headerLargeStyle: { backgroundColor: 'transparent' },
+          title: 'Settings',
+          headerRight: () => (
+            <IconButton systemName="multiply" goBack size={30} />
+          ),
         }}
       />
     </Stack>

@@ -1,4 +1,4 @@
-import ContextMenuProfile from '@/components/ContextMenu';
+import { IconButton } from '@/components/IconButton';
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
@@ -21,21 +21,16 @@ export default function Layout() {
           headerLargeStyle: { backgroundColor: 'transparent' },
           headerBlurEffect: isGlassAvailable ? undefined : blurEffect,
           title: 'Welcome',
-          headerRight: () => <ContextMenuProfile />,
+          headerRight: () => (
+            <IconButton
+              systemName="person.crop.circle"
+              navigateTo={{
+                href: '/settings',
+              }}
+            />
+          ),
         }}
       />
-      {/* <Stack.Screen
-        name="sheet"
-        options={{
-          presentation: 'formSheet',
-          sheetAllowedDetents: [0.25, 0.5],
-          sheetGrabberVisible: true,
-          contentStyle: {
-            backgroundColor: isLiquidGlassAvailable() ? 'transparent' : 'white',
-          },
-          headerShown: false,
-        }}
-      /> */}
     </Stack>
   );
 }

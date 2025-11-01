@@ -31,9 +31,9 @@ export type TextProps = ThemeProps & {
 export type ViewProps = ThemeProps & View['props'] & { animated?: boolean };
 
 export function useThemeColor<T, U>(props: { light: T; dark: U }) {
-  const theme = useColorScheme() ?? 'light';
-  // const theme = "dark";
-  return props[theme];
+  const colorScheme = useColorScheme() || 'light';
+  console.log('Current theme:', colorScheme);
+  return props[colorScheme];
 }
 
 export function ThemedText(props: TextProps) {
