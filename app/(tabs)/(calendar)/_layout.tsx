@@ -1,44 +1,41 @@
-import { useThemeColor } from '@/components/Themed';
-import { TimeZoneSwitch } from '@/components/TimeZoneSwitch';
-import { spaceScale, theme } from '@/constants/theme';
+// import ContextMenuProfile from "@/components/ContextMenu.ios";
 import { isLiquidGlassAvailable } from 'expo-glass-effect';
 import { Stack } from 'expo-router';
-import { Platform, StyleSheet, useColorScheme } from 'react-native';
-
-// const lightImageSource = require('@/assets/images/conf.png');
-// const darkImageSource = require('@/assets/images/conf-dark.png');
+import { useColorScheme } from 'react-native';
 
 export default function Layout() {
-  const tabBarBackgroundColor = useThemeColor(theme.color.background);
-  const isDarkMode = useColorScheme() === 'dark';
-  // const imageSource = isDarkMode ? darkImageSource : lightImageSource;
+  const rawTheme = useColorScheme();
+  const theme = rawTheme === 'dark' ? 'dark' : 'light';
+  const isGlassAvailable = isLiquidGlassAvailable();
+  const blurEffect =
+    theme === 'dark' ? 'systemMaterialDark' : 'systemMaterialLight';
+
   return (
-    <Stack
-      screenOptions={{
-        headerLargeTitle: true,
-        headerLargeTitleShadowVisible: false,
-        headerShadowVisible: false,
-      }}>
+    <Stack>
       <Stack.Screen
         name="index"
         options={{
-          title: Platform.OS === 'ios' ? 'Calendar' : '',
-          headerStyle: {
-            backgroundColor: isLiquidGlassAvailable()
-              ? 'transparent'
-              : tabBarBackgroundColor,
-          },
-          // headerLeft: () => <Image source={imageSource} style={styles.image} />,
-          headerRight: () => <TimeZoneSwitch />,
+          headerLargeTitle: true,
+          headerTransparent: true,
+          headerTintColor: theme === 'dark' ? 'white' : 'black',
+          headerLargeStyle: { backgroundColor: 'transparent' },
+          headerBlurEffect: isGlassAvailable ? undefined : blurEffect,
+          title: 'Home',
+          // headerLeft: () => <ContextMenuProfile />,
         }}
       />
+      {/* <Stack.Screen
+        name="sheet"
+        options={{
+          presentation: 'formSheet',
+          sheetAllowedDetents: [0.25, 0.5],
+          sheetGrabberVisible: true,
+          contentStyle: {
+            backgroundColor: isLiquidGlassAvailable() ? 'transparent' : 'white',
+          },
+          headerShown: false,
+        }}
+      /> */}
     </Stack>
   );
 }
-
-const styles = StyleSheet.create({
-  image: {
-    height: spaceScale(20),
-    width: spaceScale(72),
-  },
-});
