@@ -2,6 +2,7 @@ import { presentationHelper } from '@/utils/platformOverrides';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 
+// TODO: Removed from tab nav. Link with floating action button
 export default function Layout() {
   const rawTheme = useColorScheme();
   const presentation = presentationHelper({ theme: rawTheme });

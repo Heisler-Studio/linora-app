@@ -10,11 +10,6 @@ export default function TabsLayout() {
           drawable="custom_android_drawable"
         />
       </NativeTabs.Trigger>
-      {/* role: search moves this to the right. Probably not the best semantics */}
-      <NativeTabs.Trigger name="(edit)" role="search">
-        <Icon sf="pencil" drawable="custom_settings_drawable" />
-        <Label>Edit</Label>
-      </NativeTabs.Trigger>
     </NativeTabs>
   );
 }
