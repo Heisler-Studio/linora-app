@@ -8,7 +8,9 @@
 // Authentication Constants
 export const COOKIE_NAME = 'auth_token';
 export const REFRESH_COOKIE_NAME = 'refresh_token';
-export const COOKIE_MAX_AGE = 20; // 20 seconds
+export const COOKIE_MAX_AGE = 20; // 20 seconds--for testing purposes
+
+// JWT Constants
 export const JWT_EXPIRATION_TIME = '20s'; // 20 seconds
 export const REFRESH_TOKEN_EXPIRY = '30d'; // 30 days
 export const REFRESH_TOKEN_MAX_AGE = 30 * 24 * 60 * 60; // 30 days in seconds
@@ -30,7 +32,7 @@ export const APPLE_AUTH_URL = 'https://appleid.apple.com/auth/authorize';
 
 // Environment Constants
 export const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
-export const APP_SCHEME = process.env.EXPO_PUBLIC_SCHEME;
+export const APP_SCHEME = 'linora-app';
 export const JWT_SECRET = process.env.JWT_SECRET!;
 
 // Cookie Settings

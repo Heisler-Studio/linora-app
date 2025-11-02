@@ -59,7 +59,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           },
         },
       ],
-      ['expo-apple-authentication'],
+      // ['expo-apple-authentication'],
       ['expo-secure-store'],
     ],
     experiments: {
