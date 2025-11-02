@@ -16,14 +16,11 @@ import {
 } from '@expo/ui/swift-ui/modifiers';
 import { Image as ExpoImage } from 'expo-image';
 import { use } from 'react';
-import { StyleSheet } from 'react-native';
 
 function Content() {
   const { profile, settings, updateSettings } = use(AppContext) as AppState;
   const themeOptions = ['light', 'dark', 'auto'];
   const themeIndex = themeOptions.indexOf(settings.theme);
-
-  console.log('settings in settings screen', settings);
 
   return (
     <Host style={{ flex: 1 }}>
@@ -76,12 +73,3 @@ function Content() {
 export default function Page() {
   return <Content />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  contentContainer: {
-    padding: 16,
-  },
-});
