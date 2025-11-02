@@ -1,5 +1,6 @@
 import { IconButton } from '@/components/IconButton';
 import { AppProvider } from '@/providers/AppContext';
+import { AuthProvider } from '@/providers/auth';
 import { presentationHelper } from '@/utils/platformOverrides';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Stack } from 'expo-router';
@@ -43,14 +44,16 @@ export default function Layout() {
   const colorScheme = useColorScheme() || 'light';
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <ActionSheetProvider>
-        <AppProvider>
-          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-          <Navigation />
-        </AppProvider>
-      </ActionSheetProvider>
-    </GestureHandlerRootView>
+    <AuthProvider>
+      <GestureHandlerRootView style={styles.container}>
+        <ActionSheetProvider>
+          <AppProvider>
+            <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
+            <Navigation />
+          </AppProvider>
+        </ActionSheetProvider>
+      </GestureHandlerRootView>
+    </AuthProvider>
   );
 }
 
