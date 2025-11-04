@@ -9,6 +9,7 @@ import {
   DiscoveryDocument,
   exchangeCodeAsync,
   makeRedirectUri,
+  TokenResponse,
   useAuthRequest,
 } from 'expo-auth-session';
 // import { randomUUID } from 'expo-crypto';
@@ -308,10 +309,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const handleNativeTokens = async (tokens: {
-    accessToken: string;
-    refreshToken: string;
-  }) => {
+  const handleNativeTokens = async (tokens: TokenResponse) => {
     const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
       tokens;
 
@@ -345,7 +343,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (appleResponse?.type === 'success') {
       try {
         const { code } = appleResponse.params;
-        const response = await exchangeCodeAsync(
+        const tokenResponse = await exchangeCodeAsync(
           {
             clientId: 'apple',
             code,
@@ -372,10 +370,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } else {
           // For native: The server returns both tokens in the response
           // We need to store these tokens securely and decode the user data
-          await handleNativeTokens({
-            accessToken: response.accessToken,
-            refreshToken: response.refreshToken!,
-          });
+          await handleNativeTokens(tokenResponse);
         }
       } catch (e) {
         console.log('Error exchanging code:', e);
@@ -387,7 +382,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  async function handleResponse() {
+  const handleResponse = async () => {
     // This function is called when Google redirects back to our app
     // The response contains the authorization code that we'll exchange for tokens
     if (response?.type === 'success') {
@@ -397,62 +392,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // This code is what we'll exchange for access and refresh tokens
         const { code } = response.params;
 
-        // Create form data to send to our token endpoint
-        // We include both the code and platform information
-        // The platform info helps our server handle web vs native differently
-        const formData = new FormData();
-        formData.append('code', code);
-
-        // Add platform information for the backend to handle appropriately
-        if (isWeb) {
-          formData.append('platform', 'web');
-        }
-
-        console.log('request', request);
-
-        // Get the code verifier from the request object
-        // This is the same verifier that was used to generate the code challenge
-        if (request?.codeVerifier) {
-          formData.append('code_verifier', request.codeVerifier);
-        } else {
-          console.warn('No code verifier found in request object');
-        }
-
-        // Send the authorization code to our token endpoint
-        // The server will exchange this code with Google for access and refresh tokens
-        // For web: credentials are included to handle cookies
-        // For native: we'll receive the tokens directly in the response
-        const tokenResponse = await fetch(`${BASE_URL}/api/auth/token`, {
-          method: 'POST',
-          body: formData,
-          credentials: isWeb ? 'include' : 'same-origin', // Include cookies for web
-        });
+        const tokenResponse = await exchangeCodeAsync(
+          {
+            code,
+            extraParams: {
+              platform: Platform.OS,
+            },
+            clientId: 'google',
+            redirectUri: makeRedirectUri(),
+          },
+          discovery
+        );
 
         if (isWeb) {
           // For web: The server sets the tokens in HTTP-only cookies
           // We just need to get the user data from the response
-          const userData = await tokenResponse.json();
-          if (userData.success) {
-            // Fetch the session to get user data
-            // This ensures we have the most up-to-date user information
-            const sessionResponse = await fetch(
-              `${BASE_URL}/api/auth/session`,
-              {
-                method: 'GET',
-                credentials: 'include',
-              }
-            );
+          const sessionResponse = await fetch(`${BASE_URL}/api/auth/session`, {
+            method: 'GET',
+            credentials: 'include',
+          });
 
-            if (sessionResponse.ok) {
-              const sessionData = await sessionResponse.json();
-              setUser(sessionData as AuthUser);
-            }
+          if (sessionResponse.ok) {
+            const sessionData = await sessionResponse.json();
+            setUser(sessionData as AuthUser);
           }
         } else {
           // For native: The server returns both tokens in the response
           // We need to store these tokens securely and decode the user data
-          const tokens = await tokenResponse.json();
-          await handleNativeTokens(tokens);
+          await handleNativeTokens(tokenResponse);
         }
       } catch (e) {
         console.error('Error handling auth response:', e);
@@ -464,7 +431,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } else if (response?.type === 'error') {
       setError(response?.error as AuthError);
     }
-  }
+  };
 
   const fetchWithAuth = async (url: string, options: RequestInit) => {
     if (isWeb) {
