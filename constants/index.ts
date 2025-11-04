@@ -6,6 +6,8 @@
  */
 
 // Authentication Constants
+export const TOKEN_KEY_NAME = 'accessToken';
+export const REFRESH_TOKEN_KEY_NAME = 'refreshToken';
 export const COOKIE_NAME = 'auth_token';
 export const REFRESH_COOKIE_NAME = 'refresh_token';
 export const COOKIE_MAX_AGE = 20; // 20 seconds--for testing purposes
@@ -32,7 +34,9 @@ export const APPLE_AUTH_URL = 'https://appleid.apple.com/auth/authorize';
 
 // Environment Constants
 export const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL;
-export const APP_SCHEME = 'linora-app';
+// NOTE: Make sure APP_SCHEME ends with '://' here. This is important for URL comparisons.
+// :// is omitted from the variable because its also used in app config where only the scheme name is needed.
+export const APP_SCHEME = `${process.env.EXPO_PUBLIC_APP_SCHEME}://`;
 export const JWT_SECRET = process.env.JWT_SECRET!;
 
 // Cookie Settings

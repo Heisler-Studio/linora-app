@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/constants';
+import { BASE_URL, REFRESH_TOKEN_KEY_NAME, TOKEN_KEY_NAME } from '@/constants';
 import { tokenCache } from '@/utils/cache';
 // import { handleAppleAuthError } from '@/utils/handleAppleError';
 import { AuthUser } from '@/utils/middleware';
@@ -103,8 +103,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
         } else {
           // For native: Try to use the stored access token first
-          const storedAccessToken = await tokenCache?.getToken('accessToken');
-          const storedRefreshToken = await tokenCache?.getToken('refreshToken');
+          const storedAccessToken = await tokenCache?.getToken(TOKEN_KEY_NAME);
+          const storedRefreshToken = await tokenCache?.getToken(
+            REFRESH_TOKEN_KEY_NAME
+          );
 
           console.log(
             'Restoring session - Access token:',
@@ -272,9 +274,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         // Save both tokens to cache
         if (newAccessToken)
-          await tokenCache?.saveToken('accessToken', newAccessToken);
+          await tokenCache?.saveToken(TOKEN_KEY_NAME, newAccessToken);
         if (newRefreshToken)
-          await tokenCache?.saveToken('refreshToken', newRefreshToken);
+          await tokenCache?.saveToken(REFRESH_TOKEN_KEY_NAME, newRefreshToken);
 
         // Update user data from the new access token
         if (newAccessToken) {
@@ -328,9 +330,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Save tokens to secure storage for persistence
     if (newAccessToken)
-      await tokenCache?.saveToken('accessToken', newAccessToken);
+      await tokenCache?.saveToken(TOKEN_KEY_NAME, newAccessToken);
     if (newRefreshToken)
-      await tokenCache?.saveToken('refreshToken', newRefreshToken);
+      await tokenCache?.saveToken(REFRESH_TOKEN_KEY_NAME, newRefreshToken);
 
     // Decode the JWT access token to get user information
     if (newAccessToken) {
@@ -586,8 +588,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } else {
       // For native: Clear both tokens from cache
-      await tokenCache?.deleteToken('accessToken');
-      await tokenCache?.deleteToken('refreshToken');
+      await tokenCache?.deleteToken(TOKEN_KEY_NAME);
+      await tokenCache?.deleteToken(REFRESH_TOKEN_KEY_NAME);
     }
 
     // Clear state
