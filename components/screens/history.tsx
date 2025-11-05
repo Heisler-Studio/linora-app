@@ -24,7 +24,7 @@ function Content() {
     <Host style={{ flex: 1 }}>
       <Form>
         <Text>Hello</Text>
-        {user?.name && <Text>{user.name}</Text>}
+        {user?.given_name && <Text>{user.given_name}</Text>}
       </Form>
     </Host>
   );
