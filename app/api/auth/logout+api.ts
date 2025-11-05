@@ -5,6 +5,7 @@ import {
   REFRESH_COOKIE_OPTIONS,
 } from '@/constants';
 
+// Web-only API route to handle user logout by clearing authentication cookies
 export async function POST(request: Request) {
   try {
     // Create a response
