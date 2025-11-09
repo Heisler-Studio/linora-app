@@ -1,4 +1,5 @@
 import { IconButton } from '@/components/IconButton';
+import { AuthGate } from "@/components/AuthGate";
 import { AppProvider } from '@/providers/AppContext';
 import { AuthProvider } from '@/providers/auth';
 import { presentationHelper } from '@/utils/platformOverrides';
@@ -14,6 +15,7 @@ function Navigation() {
 
   return (
     <Stack>
+      <Stack.Screen name="login" options={{ headerShown: false }} />
       <Stack.Screen name="index" options={{ headerShown: false }} />
 
       <Stack.Screen
@@ -51,7 +53,9 @@ export default function Layout() {
         <ActionSheetProvider>
           <AppProvider>
             <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-            <Navigation />
+            <AuthGate>
+              <Navigation />
+            </AuthGate>
           </AppProvider>
         </ActionSheetProvider>
       </GestureHandlerRootView>
