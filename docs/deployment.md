@@ -20,4 +20,6 @@ eas deploy [--prod] [--alias preview]
 ## TODO
 
 - [x] Configure the origin from EAS deployment
-- [ ] Setup env files
+- [ ] Setup env variables for each deployment
+- [ ] Update GCP with deployed API callback for final domain
+- [ ] Google verification for final domain (TXT record)

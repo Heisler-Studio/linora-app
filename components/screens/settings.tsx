@@ -1,6 +1,8 @@
 import { AppContext } from '@/providers/AppContext';
+import { useAuth } from '@/providers/auth';
 import { AppState } from '@/providers/types';
 import {
+  Button,
   Form,
   Host,
   HStack,
@@ -18,6 +20,7 @@ import { Image as ExpoImage } from 'expo-image';
 import { use } from 'react';
 
 function Content() {
+  const { user, signOut } = useAuth();
   const { profile, settings, updateSettings } = use(AppContext) as AppState;
   const themeOptions = ['light', 'dark', 'auto'];
   const themeIndex = themeOptions.indexOf(settings.theme);
@@ -29,11 +32,13 @@ function Content() {
           <HStack spacing={16}>
             <HStack
               modifiers={[frame({ width: 60, height: 60 }), cornerRadius(100)]}>
-              <ExpoImage
-                source={{ uri: 'https://github.com/evanheisler.png' }}
-                style={{ width: 60, height: 60 }}
-                contentFit="fill"
-              />
+              {user?.picture && (
+                <ExpoImage
+                  source={{ uri: user.picture }}
+                  style={{ width: 60, height: 60 }}
+                  contentFit="fill"
+                />
+              )}
             </HStack>
 
             <VStack alignment="leading">
@@ -64,6 +69,12 @@ function Content() {
             }}
             variant="menu"
           />
+        </Section>
+
+        <Section>
+          <Button onPress={signOut} variant="default">
+            Sign Out
+          </Button>
         </Section>
       </Form>
     </Host>

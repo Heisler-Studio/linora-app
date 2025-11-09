@@ -8,7 +8,7 @@ const APP_NAME = 'Linora';
 const BUNDLE_IDENTIFIER = 'com.linora.app';
 const PACKAGE_NAME = 'com.linora.app';
 const ICON = './assets/images/icon.png';
-const SCHEME = 'linora-app';
+const SCHEME = process.env.EXPO_PUBLIC_APP_SCHEME;
 
 export default ({ config }: ConfigContext): ExpoConfig => {
   console.log('⚙️ Building app for environment:', process.env.APP_ENV);
@@ -59,6 +59,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           },
         },
       ],
+      // ['expo-apple-authentication'],
+      ['expo-secure-store'],
     ],
     experiments: {
       typedRoutes: true,
@@ -93,7 +95,7 @@ export const getDynamicAppConfig = (
       bundleIdentifier: `${BUNDLE_IDENTIFIER}.preview`,
       packageName: `${PACKAGE_NAME}.preview`,
       icon: ICON,
-      scheme: `${SCHEME}-prev`,
+      scheme: SCHEME, //`${SCHEME}-prev`,
     };
   }
 
@@ -102,6 +104,6 @@ export const getDynamicAppConfig = (
     bundleIdentifier: `${BUNDLE_IDENTIFIER}.dev`,
     packageName: `${PACKAGE_NAME}.dev`,
     icon: ICON,
-    scheme: `${SCHEME}-dev`,
+    scheme: SCHEME, // `${SCHEME}-dev`,
   };
 };
