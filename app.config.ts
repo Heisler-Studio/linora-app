@@ -19,6 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     );
 
   return {
+    owner: 'heisler.studio',
     name,
     slug: PROJECT_SLUG, // Must be consistent across all environments.,
     version, // Automatically bump your project version with `npm version patch`, `npm version minor` or `npm version major`.
