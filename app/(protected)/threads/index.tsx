@@ -1,1 +1,1 @@
-export { default } from '@/components/screens/editPost';
+export { default } from '@/components/screens/threads';

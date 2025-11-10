@@ -16,7 +16,7 @@ export default function ProtectedLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="(tabs)"
+        name="threads"
         options={{
           headerShown: false,
         }}
@@ -35,12 +35,6 @@ export default function ProtectedLayout() {
           headerRight: () => (
             <IconButton systemName="multiply" goBack size={30} />
           ),
-        }}
-      />
-      <Stack.Screen
-        name="threads"
-        options={{
-          headerShown: false,
         }}
       />
     </Stack>

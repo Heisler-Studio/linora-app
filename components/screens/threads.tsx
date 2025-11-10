@@ -6,8 +6,6 @@ import LoginForm from './loginForm';
 function Content() {
   const { user, isLoading } = useAuth();
 
-  console.log('User in History screen:', user, isLoading);
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
