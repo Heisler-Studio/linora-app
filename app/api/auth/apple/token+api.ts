@@ -15,6 +15,10 @@ import * as jose from 'jose';
 
 export async function POST(request: Request) {
   const body = await request.formData();
+  if (!(body instanceof FormData)) {
+    return Response.json({ error: 'Invalid request body' }, { status: 400 });
+  }
+
   const code = body.get('code') as string;
   const platform = (body.get('platform') as string) || 'native'; // Default to native if not specified
 
