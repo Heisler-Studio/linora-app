@@ -47,6 +47,13 @@ export async function POST(request: Request) {
       // Handle form data
       try {
         const formData = await request.formData();
+        if (!(formData instanceof FormData)) {
+          return Response.json(
+            { error: 'Invalid request body' },
+            { status: 400 }
+          );
+        }
+
         platform = (formData.get('platform') as string) || 'native';
 
         // For native clients, get refresh token from form data
