@@ -1,45 +1,18 @@
-import { IconButton } from '@/components/IconButton';
-import { AuthGate } from "@/components/AuthGate";
+import { ThemedView } from '@/components/ThemedView';
 import { AppProvider } from '@/providers/AppContext';
-import { AuthProvider } from '@/providers/auth';
-import { presentationHelper } from '@/utils/platformOverrides';
+import { AuthProvider, useAuth } from '@/providers/auth';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, useColorScheme } from 'react-native';
+import React from 'react';
+import { ActivityIndicator, StyleSheet, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function Navigation() {
-  const rawTheme = useColorScheme();
-  const presentation = presentationHelper({ theme: rawTheme });
-
   return (
     <Stack>
-      <Stack.Screen name="login" options={{ headerShown: false }} />
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-
-      <Stack.Screen
-        name="(tabs)"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="settings/index"
-        options={{
-          presentation: presentation.presentation,
-          sheetGrabberVisible: false,
-          sheetAllowedDetents: [1],
-          sheetInitialDetentIndex: 0,
-          headerBlurEffect: presentation.blurEffect,
-          headerTransparent: true,
-          headerTintColor: rawTheme === 'dark' ? 'white' : 'black',
-          title: '',
-          headerRight: () => (
-            <IconButton systemName="multiply" goBack size={30} />
-          ),
-        }}
-      />
+      <Stack.Screen name="(protected)" options={{ headerShown: false }} />
+      <Stack.Screen name="(public)" options={{ headerShown: false }} />
     </Stack>
   );
 }
@@ -53,9 +26,9 @@ export default function Layout() {
         <ActionSheetProvider>
           <AppProvider>
             <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-            <AuthGate>
+            <LoadingWrapper>
               <Navigation />
-            </AuthGate>
+            </LoadingWrapper>
           </AppProvider>
         </ActionSheetProvider>
       </GestureHandlerRootView>
@@ -63,8 +36,23 @@ export default function Layout() {
   );
 }
 
+function LoadingWrapper({ children }: { children: React.ReactNode }) {
+  const { isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <ThemedView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" />
+      </ThemedView>
+    );
+  }
+
+  return <>{children}</>;
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });
