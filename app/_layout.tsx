@@ -42,7 +42,7 @@ function LoadingWrapper({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <ThemedView style={styles.loadingContainer}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator />
       </ThemedView>
     );
   }

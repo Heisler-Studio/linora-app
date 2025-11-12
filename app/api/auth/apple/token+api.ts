@@ -48,7 +48,7 @@ export async function POST(request: Request) {
 
   if (response.status === 200) {
     const data = await response.json();
-    const { access_token, id_token } = data;
+    const { id_token } = data;
 
     const userInfo = jose.decodeJwt(id_token) as object;
 

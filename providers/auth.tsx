@@ -281,7 +281,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Update user data from the new access token
         if (newAccessToken) {
           const decoded = jose.decodeJwt(newAccessToken);
-          console.log('Decoded user data:', decoded);
+
           // Check if we have all required user fields
           const hasRequiredFields =
             decoded &&
