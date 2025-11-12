@@ -81,6 +81,7 @@ export async function GET(request: Request) {
         cookieExpiration,
       });
     } catch (error) {
+      console.error('Session verify error:', error);
       // Token is invalid or expired
       return Response.json({ error: 'Invalid token' }, { status: 401 });
     }
